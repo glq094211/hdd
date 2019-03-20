@@ -1,10 +1,11 @@
 server:
   port: 8080
-    context-path:/hdd
-    
+  servlet:
+    context-path: /hdd
+
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/dbcrawler?serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/dbhdd?serverTimezone=GMT%2B8
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -13,6 +14,9 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+    hibernate:
+      ddl-auto: update
+
 
   redis:
     host: 116.62.205.216
