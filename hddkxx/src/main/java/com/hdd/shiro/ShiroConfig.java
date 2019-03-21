@@ -7,6 +7,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
+import org.apache.shiro.mgt.SecurityManager;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -38,14 +39,14 @@ public class ShiroConfig {
 
 
     @Bean
-    public DefaultWebSecurityManager securityManager(){
-        DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
-        securityManager.setRealm(myShiroRealm());
+    public SecurityManager securityManager() {
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         return securityManager;
     }
 
+
     @Bean
-    public ShiroFilterFactoryBean shirFilter(DefaultWebSecurityManager securityManager) {
+    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
@@ -72,6 +73,28 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
+   /* @Bean("shiroFilter")
+    public ShiroFilterFactoryBean shiroFilter(SecurityManager securityManager) {
+        //1.定义shiroFactoryBean
+        ShiroFilterFactoryBean shiroFilterFactoryBean=new ShiroFilterFactoryBean();
+        //2.设置securityManager
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+        //3.LinkedHashMap是有序的，进行顺序拦截器配置
+        Map<String,String> filterChainMap = new LinkedHashMap<String,String>();
+        //4.配置logout过滤器
+        filterChainMap.put("/logout", "logout");
+        //5.所有url必须通过认证才可以访问
+        filterChainMap.put("/**","authc");
+        //6.设置默认登录的url
+        shiroFilterFactoryBean.setLoginUrl("/login");
+        //7.设置成功之后要跳转的链接
+        shiroFilterFactoryBean.setSuccessUrl("/index");
+        //8.设置未授权界面
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        //9.设置shiroFilterFactoryBean的FilterChainDefinitionMap
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainMap);
+        return shiroFilterFactoryBean;
+    }*/
 
     /**
      *  开启shiro aop注解支持.
@@ -92,11 +115,12 @@ public class ShiroConfig {
         SimpleMappingExceptionResolver r = new SimpleMappingExceptionResolver();
         Properties mappings = new Properties();
         mappings.setProperty("DatabaseException", "databaseError");//数据库异常处理
-        mappings.setProperty("UnauthorizedException","/user/403");
+        mappings.setProperty("UnauthorizedException", "/templates/user/403");
         r.setExceptionMappings(mappings);  // None by default
         r.setDefaultErrorView("error");    // No default
         r.setExceptionAttribute("exception");     // Default is "exception"
         //r.setWarnLogCategory("example.MvcLogger");     // No default
         return r;
     }
+
 }
