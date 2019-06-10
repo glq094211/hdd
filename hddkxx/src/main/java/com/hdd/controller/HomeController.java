@@ -32,7 +32,7 @@ public class HomeController {
     public String toLogin(Map<String, Object> map, HttpServletRequest request)
     {
         loginService.logout();
-        return "user/login";
+        return "/user/login";
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
