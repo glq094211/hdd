@@ -24,8 +24,8 @@ public class BaseTest {
     }*/
 
     public static void main(String[] args) {
-        Integer [] integers = {5,7,2,1,8};
+        /*Integer [] integers = {5,7,2,1,8};
         Arrays.sort(integers,(o1,o2) -> Integer.compare(o2,o1));
-        Arrays.stream(integers).forEach(System.out::println);
+        Arrays.stream(integers).forEach(System.out::println);*/
     }
 }
