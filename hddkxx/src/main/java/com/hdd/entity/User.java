@@ -121,4 +121,20 @@ public class User {
     public String getCredentialsSalt(){
         return this.userName+this.salt;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", state=" + state +
+                ", roleList=" + roleList +
+                ", createTime=" + createTime +
+                ", expiredDate=" + expiredDate +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

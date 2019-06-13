@@ -22,6 +22,7 @@ public class Menu {
     private Long pid;
     private String pids;
     private String title;
+    private Integer sort;
     @CreatedDate
     private Date createDate;
     @LastModifiedDate
@@ -84,5 +85,13 @@ public class Menu {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

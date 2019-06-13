@@ -1,8 +1,11 @@
 package com.hdd.controller;
 
 import com.hdd.entity.LoginResult;
+import com.hdd.entity.User;
 import com.hdd.service.LoginService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,7 +23,9 @@ public class HomeController {
     private LoginService loginService;
 
     @RequestMapping({"/","/index"})
-    public String index(){
+    public String index(Model model){
+        User principal = (User) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("user",principal);
         return "index";
     }
 
@@ -38,10 +43,14 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String login(Map<String, Object> map,HttpServletRequest request) throws Exception{
+    public String login(Map<String, Object> map,HttpServletRequest request,Model model) throws Exception{
         System.out.println("login()");
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
+
+        User principal = (User) SecurityUtils.getSubject().getPrincipal();
+        System.out.println(principal);
+        model.addAttribute("user",principal);
 
         LoginResult loginResult = loginService.login(userName,password);
         if(loginResult.isLogin())
